@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "name": "instagram",
-  "alias": "instagram-react",
+  "name": "instagram-clone",
+  "alias": "instagram-react-clone",
   "builds": [
     {
       "src": "package.json",

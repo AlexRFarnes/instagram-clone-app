@@ -1,65 +1,49 @@
-# instagram-react
+# Instagram Clone App
 
-## Routes
+> An Instagram app clone made with React, Apollo Client, GraphQL, and Material UI.
 
-- / (feed page)
+## Table of contents
 
-Components: 
+- [General info](#general-info)
+- [Screenshots](#screenshots)
+- [Built With](#built-with)
+- [Features](#features)
+- [Status](#status)
+- [Inspiration](#inspiration)
+- [Contact](#contact)
 
-- FeedPost
-- FeedPostSkeleton
-- FeedSideSuggestions
-
-- /explore (explore page)
-
-Components:
-
-- ExploreSuggestions
-- ExploreGrid
+## General info
 
 
-- /p/:postId (post page)
+## Screenshots
 
-Components:
+![Screenshot]()
+[Demo]()
 
-- Post
-- PostSkeleton
-- PostModal
-- MorePostsFromUser
+## Technologies
 
+- JavaScript
+- React
+- Apollo Client
+- GraphQL
+- Material UI
 
-- notification
+## Features
 
-Components:
+List of features ready and TODOs for future development
 
-- NotificationList
-- NotificationTooltip
+- 
 
+## Status
 
-- /:username (profile page)
+Project is: _in-progress_.
 
-Components: 
+## Inspiration
 
-- ProfileTabs
+- Project based on [React Bootcamp](https://reactbootcamp.com/).
 
+## Contact
 
-- /accounts/edit/ (edit profile page)
-
-
-- /accounts/login/ (login page)
-
-- /accounts/emailsignup/ (signup page)
-
-- * (not found page)
-
-## Shared Components
-
-- Navbar
-- FollowSuggestions
-- FollowButton
-- UserCard
-- LoadingScreen
-- OptionsDialog
-- ProfilePicture
-- Layout
-- SEO
+- GitHub [@AlexRFarnes](https://github.com/AlexRFarnes)
+- Twitter [@AlexRFarnes](https://twitter.com/alexrfarnes)
+- Linkedin [@AlexRFarnes](https://www.linkedin.com/in/alexrfarnes/)
