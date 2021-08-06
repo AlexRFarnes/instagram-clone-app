@@ -33,6 +33,7 @@ function FeedPost({ post, index }) {
     <>
       <article
         className={classes.article}
+        // Conditionally change the margin bottom when displaying the FollowSuggestions
         style={{ marginBottom: showFollowSuggestions && 30 }}>
         {/* Feed Post Header */}
         <div className={classes.postHeader}>
