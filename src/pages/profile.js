@@ -205,7 +205,7 @@ function PostCountSection({ user }) {
       </Hidden>
       <section className={classes.followingSection}>
         {options.map(option => (
-          <div key={options} className={classes.followingText}>
+          <div key={option} className={classes.followingText}>
             <Typography className={classes.followingCount}>
               {user[option].length}
             </Typography>

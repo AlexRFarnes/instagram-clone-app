@@ -183,8 +183,8 @@ function Comment() {
         value={content}
         placeholder='Add a comment...'
         multiline
-        rowsMax={2}
-        rows={1}
+        maxRows={2}
+        minRows={1}
         onChange={event => setContent(event.target.value)}
         InputProps={{
           classes: {
