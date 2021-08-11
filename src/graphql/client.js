@@ -3,12 +3,12 @@ import { WebSocketLink } from "apollo-link-ws";
 import { InMemoryCache } from "apollo-cache-inmemory";
 
 const headers = {
-  "x-hasura-admin-secret": "xxxx-xxxx-xxxx-xxxx",
+  "x-hasura-admin-secret": process.env.REACT_APP_SECRET_HASURA,
 };
 
 const client = new ApolloClient({
   link: new WebSocketLink({
-    uri: "wss://instagram-clone-app-react.herokuapp.com/v1/graphql",
+    uri: process.env.REACT_APP_ENDPOINT,
     options: {
       reconnect: true,
       lazy: true,
