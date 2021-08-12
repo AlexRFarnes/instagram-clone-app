@@ -10,7 +10,7 @@ import {
   InputAdornment,
 } from "@material-ui/core";
 import { HighlightOff, CheckCircleOutline } from "@material-ui/icons";
-import { LoginWithFacebook } from "./login";
+import { LogInWithFacebook } from "./login";
 import { AuthContext } from "../auth";
 import { useForm } from "react-hook-form";
 import isEmail from "validator/lib/isEmail";
@@ -19,7 +19,7 @@ import { CHECK_IF_USERNAME_TAKEN } from "../graphql/queries";
 
 function SignUpPage() {
   const classes = useSignUpPageStyles();
-  const { register, handleSubmit, formState, errors } = useForm({
+  const { register, handleSubmit, formState } = useForm({
     mode: "onBlur",
   });
   const { signUpWithEmailAndPassword } = React.useContext(AuthContext);
@@ -86,7 +86,7 @@ function SignUpPage() {
             <Typography className={classes.cardHeaderSubHeader}>
               Sign up to see photos and videos from your friends.
             </Typography>
-            <LoginWithFacebook
+            <LogInWithFacebook
               color='primary'
               iconColor='white'
               variant='contained'
@@ -102,7 +102,7 @@ function SignUpPage() {
             </div>
             <form onSubmit={handleSubmit(onSubmit)}>
               <TextField
-                name='email'
+                // name='email'
                 {...register("email", {
                   required: true,
                   validate: input => isEmail(input), // true or false
@@ -120,7 +120,7 @@ function SignUpPage() {
                 className={classes.textField}
               />
               <TextField
-                name='name'
+                // name='name'
                 {...register("name", {
                   required: true,
                   minLength: 5,
@@ -138,7 +138,7 @@ function SignUpPage() {
                 className={classes.textField}
               />
               <TextField
-                name='username'
+                // name='username'
                 {...register("username", {
                   required: true,
                   minLength: 5,
@@ -160,7 +160,7 @@ function SignUpPage() {
                 autoComplete='username'
               />
               <TextField
-                name='password'
+                // name='password'
                 {...register("password", {
                   required: true,
                   minLength: 5,

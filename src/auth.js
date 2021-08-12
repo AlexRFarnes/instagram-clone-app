@@ -6,7 +6,8 @@ import defaultUserImage from "./images/default-user-image.jpg";
 import { useMutation } from "@apollo/react-hooks";
 import { CREATE_USER } from "./graphql/mutations";
 
-const provider = new firebase.auth.GoogleAuthProvider();
+// const provider = new firebase.auth.GoogleAuthProvider();
+const provider = new firebase.auth.FacebookAuthProvider();
 
 // Find these options in your Firebase console
 firebase.initializeApp({
@@ -55,8 +56,32 @@ function AuthProvider({ children }) {
     });
   }, []);
 
-  async function signInWithGoogle() {
-    await firebase.auth().signInWithPopup(provider);
+  async function logInWithFacebook() {
+    const data = await firebase.auth().signInWithPopup(provider);
+    // console.log(data);
+    if (data.additionalUserInfo.isNewUser) {
+      const { uid, displayName, email, photoURL } = data.user;
+      const username = `${displayName.replace(/\s+/g, "")}${uid.slice(-5)}`;
+      const variables = {
+        userId: uid,
+        name: displayName,
+        username: username,
+        email: email,
+        bio: "",
+        website: "",
+        phoneNumber: "",
+        profileImage: photoURL,
+      };
+      await createUser({ variables });
+    }
+  }
+
+  async function logInWithEmailAndPassword(email, password) {
+    const data = await firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password);
+
+    return data;
   }
 
   async function signUpWithEmailAndPassword(formData) {
@@ -91,9 +116,10 @@ function AuthProvider({ children }) {
       <AuthContext.Provider
         value={{
           authState,
-          signInWithGoogle,
+          logInWithFacebook,
           signOut,
           signUpWithEmailAndPassword,
+          logInWithEmailAndPassword,
         }}>
         {children}
       </AuthContext.Provider>
