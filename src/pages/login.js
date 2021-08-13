@@ -165,7 +165,7 @@ export function LogInWithFacebook({ color, iconColor, variant }) {
   async function handleLoginWithFacebook() {
     try {
       await logInWithFacebook();
-      setTimeout(() => history.push("/"), 0);
+      setTimeout(() => history.push("/"), 2000);
     } catch (error) {
       console.error("Error loggin in with Facebook", error);
       setError(error.message);
