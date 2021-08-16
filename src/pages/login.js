@@ -39,7 +39,7 @@ function LoginPage() {
         input = await getUserEmail(input);
       }
       await logInWithEmailAndPassword(input.trim(), password);
-      setTimeout(() => history.push("/"), 0);
+      setTimeout(() => history.push("/"), 2000);
     } catch (error) {
       // console.error("Error loggin in", error);
       handleError(error);
@@ -79,10 +79,10 @@ function LoginPage() {
             <CardHeader className={classes.cardHeader} />
             <form onSubmit={handleSubmit(onSubmit)}>
               <TextField
-                {...register("input", {
+                name='input'
+                inputRef={register({
                   required: true,
                   minLength: 5,
-                  maxLength: 20,
                 })}
                 fullWidth
                 variant='filled'
@@ -92,7 +92,8 @@ function LoginPage() {
                 autoComplete='username'
               />
               <TextField
-                {...register("password", {
+                name='password'
+                inputRef={register({
                   required: true,
                   minLength: 5,
                 })}

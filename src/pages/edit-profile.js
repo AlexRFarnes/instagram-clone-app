@@ -21,12 +21,13 @@ import ProfilePicture from "../components/shared/ProfilePicture";
 // import { defaultCurrentUser } from "../data";
 import { GET_EDIT_USER_PROFILE } from "../graphql/queries";
 import { useEditProfilePageStyles } from "../styles";
-import { useForm, FormProvider, useFormContext } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import isURL from "validator/lib/isURL";
 import isEmail from "validator/lib/isEmail";
 import isMobilePhone from "validator/lib/isMobilePhone";
-import { EDIT_USER } from "../graphql/mutations";
+import { EDIT_USER, EDIT_USER_AVATAR } from "../graphql/mutations";
 import { AuthContext } from "../auth";
+import handleImageUpload from "../utils/handleImageUpload";
 
 function EditProfilePage({ history }) {
   const { currentUserId } = React.useContext(UserContext);
@@ -139,8 +140,10 @@ const DEFAULT_ERROR = { type: "", message: "" };
 
 function EditUserInfo({ user }) {
   const classes = useEditProfilePageStyles();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm({ mode: "onBlur" });
+  const [profileImage, setProfileImage] = React.useState(user.profile_image);
   const [editUser] = useMutation(EDIT_USER);
+  const [editUserAvatar] = useMutation(EDIT_USER_AVATAR);
   const { updateEmail } = React.useContext(AuthContext);
   const [error, setError] = React.useState(DEFAULT_ERROR);
   const [open, setOpen] = React.useState(false);
@@ -166,122 +169,142 @@ function EditUserInfo({ user }) {
     }
   }
 
+  async function handleUpdateProfilePic(event) {
+    const url = await handleImageUpload(event.target.files[0]);
+    const variables = { id: user.id, profileImage: url };
+    await editUserAvatar({ variables });
+    setProfileImage(url);
+  }
+
   return (
-    <FormProvider register={register}>
-      <section className={classes.container}>
-        <div className={classes.pictureSectionItem}>
-          <ProfilePicture size={38} image={user.profile_image} />
-          <div className={classes.justifySelfStart}>
-            <Typography className={classes.typography}>
-              {user.username}
-            </Typography>
+    <section className={classes.container}>
+      <div className={classes.pictureSectionItem}>
+        <ProfilePicture size={38} image={profileImage} />
+        <div className={classes.justifySelfStart}>
+          <Typography className={classes.typography}>
+            {user.username}
+          </Typography>
+          <input
+            accept='image/*'
+            id='image'
+            type='file'
+            style={{ display: "none" }}
+            onChange={handleUpdateProfilePic}
+          />
+          <label htmlFor='image'>
             <Typography
               color='primary'
               variant='body2'
               className={classes.typographyChangePic}>
               Change Profile Photo
             </Typography>
-          </div>
+          </label>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
-          <SectionItem
-            name='name'
-            rules={{ required: true, minLength: 5, maxLength: 20 }}
-            text='Name'
-            formItem={user.name}
-          />
-          <SectionItem
-            name='username'
-            rules={{
-              required: true,
-              pattern: /^[a-zA-Z0-9._]*$/,
-              minLength: 5,
-              maxLength: 20,
-            }}
-            error={error}
-            text='Username'
-            formItem={user.username}
-          />
-          <SectionItem
-            name='website'
-            rules={{
-              validate: input =>
-                Boolean(input)
-                  ? isURL(input, {
-                      protocols: ["http", "https"],
-                      require_protocol: true,
-                    })
-                  : true,
-            }}
-            text='Website'
-            formItem={user.website}
-          />
-          <div className={classes.sectionItem}>
-            <aside>
-              <Typography className={classes.bio}>Bio</Typography>
-            </aside>
-            <TextField
-              {...register("bio", { maxLength: 120 })}
-              variant='outlined'
-              multiline
-              maxRows={3}
-              minRows={3}
-              fullWidth
-              defaultValue={user.bio}
-            />
-          </div>
-          <div className={classes.sectionItem}>
-            <div />
-            <Typography
-              color='textSecondary'
-              className={classes.justifySelfStart}>
-              Personal Information
-            </Typography>
-          </div>
-          <SectionItem
-            name='email'
-            rules={{
-              required: true,
-              validate: input => isEmail(input),
-            }}
-            text='Email'
-            type='email'
-            formItem={user.email}
-            error={error}
-          />
-          <SectionItem
-            name='phoneNumber'
-            rules={{
-              validate: input => (Boolean(input) ? isMobilePhone(input) : true),
-            }}
-            text='Phone'
-            formItem={user.phone_number}
-          />
-          <div className={classes.sectionItem}>
-            <div />
-            <Button
-              type='submit'
-              color='primary'
-              variant='contained'
-              className={classes.justifySelfStart}>
-              Submit
-            </Button>
-          </div>
-        </form>
-        <Snackbar
-          open={open}
-          autoHideDuration={6000}
-          TransitionComponent={Slide}
-          message={<span>Profile updated</span>}
-          onClose={() => setOpen(false)}
+      </div>
+      <form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
+        <SectionItem
+          name='name'
+          inputRef={register({
+            required: true,
+            minLength: 5,
+            maxLength: 20,
+          })}
+          text='Name'
+          formItem={user.name}
         />
-      </section>
-    </FormProvider>
+        <SectionItem
+          name='username'
+          error={error}
+          inputRef={register({
+            required: true,
+            pattern: /^[a-zA-Z0-9_.]*$/,
+            minLength: 5,
+            maxLength: 20,
+          })}
+          text='Username'
+          formItem={user.username}
+        />
+        <SectionItem
+          name='website'
+          inputRef={register({
+            validate: input =>
+              Boolean(input)
+                ? isURL(input, {
+                    protocols: ["http", "https"],
+                    require_protocol: true,
+                  })
+                : true,
+          })}
+          text='Website'
+          formItem={user.website}
+        />
+        <div className={classes.sectionItem}>
+          <aside>
+            <Typography className={classes.bio}>Bio</Typography>
+          </aside>
+          <TextField
+            name='bio'
+            inputRef={register({
+              maxLength: 120,
+            })}
+            variant='outlined'
+            multiline
+            maxRows={3}
+            minRows={3}
+            fullWidth
+            defaultValue={user.bio}
+          />
+        </div>
+        <div className={classes.sectionItem}>
+          <div />
+          <Typography
+            color='textSecondary'
+            className={classes.justifySelfStart}>
+            Personal Information
+          </Typography>
+        </div>
+        <SectionItem
+          name='email'
+          error={error}
+          inputRef={register({
+            required: true,
+            validate: input => isEmail(input),
+          })}
+          text='Email'
+          type='email'
+          formItem={user.email}
+        />
+        <SectionItem
+          name='phoneNumber'
+          inputRef={register({
+            validate: input => (Boolean(input) ? isMobilePhone(input) : true),
+          })}
+          text='Phone'
+          formItem={user.phone_number}
+        />
+        <div className={classes.sectionItem}>
+          <div />
+          <Button
+            type='submit'
+            color='primary'
+            variant='contained'
+            className={classes.justifySelfStart}>
+            Submit
+          </Button>
+        </div>
+      </form>
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        TransitionComponent={Slide}
+        message={<span>Profile updated</span>}
+        onClose={() => setOpen(false)}
+      />
+    </section>
   );
 }
 
-function SectionItem({ type = "text", text, formItem, name, rules, error }) {
-  const { register } = useFormContext();
+function SectionItem({ type = "text", text, formItem, name, inputRef, error }) {
   const classes = useEditProfilePageStyles();
 
   return (
@@ -297,9 +320,8 @@ function SectionItem({ type = "text", text, formItem, name, rules, error }) {
         </Hidden>
       </aside>
       <TextField
-        // name={name}
-        {...register(name, { ...rules })}
-        // {...register("test", { required: true, minLength: 5 })}
+        name={name}
+        inputRef={inputRef}
         fullWidth
         helperText={error?.type === name && error.message}
         variant='outlined'

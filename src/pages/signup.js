@@ -102,10 +102,10 @@ function SignUpPage() {
             </div>
             <form onSubmit={handleSubmit(onSubmit)}>
               <TextField
-                // name='email'
-                {...register("email", {
+                name='email'
+                inputRef={register({
                   required: true,
-                  validate: input => isEmail(input), // true or false
+                  validate: input => isEmail(input),
                 })}
                 InputProps={{
                   endAdornment: formState.errors.email
@@ -120,11 +120,11 @@ function SignUpPage() {
                 className={classes.textField}
               />
               <TextField
-                // name='name'
-                {...register("name", {
+                name='name'
+                inputRef={register({
                   required: true,
                   minLength: 5,
-                  maxLength: 25,
+                  maxLength: 20,
                 })}
                 InputProps={{
                   endAdornment: formState.errors.name
@@ -138,14 +138,14 @@ function SignUpPage() {
                 className={classes.textField}
               />
               <TextField
-                // name='username'
-                {...register("username", {
+                name='username'
+                inputRef={register({
                   required: true,
                   minLength: 5,
                   maxLength: 20,
-                  // Accept only lowercase/uppercase letters, numbers, periods, and underscores
-                  pattern: /^[a-zA-Z0-9_.]*$/,
                   validate: async input => await validateUsername(input),
+                  // accept only lowercase/uppercase letters, numbers, periods and underscores
+                  pattern: /^[a-zA-Z0-9_.]*$/,
                 })}
                 InputProps={{
                   endAdornment: formState.errors.username
@@ -160,8 +160,8 @@ function SignUpPage() {
                 autoComplete='username'
               />
               <TextField
-                // name='password'
-                {...register("password", {
+                name='password'
+                inputRef={register({
                   required: true,
                   minLength: 5,
                 })}
