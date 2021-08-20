@@ -91,22 +91,20 @@ function Post({ postId }) {
                 : `${likes_aggregate.aggregate.count} likes`}
             </span>
           </Typography>
-          <div className={classes.postCaptionContainer}>
-            <div
-              style={{
-                overflowY: "scroll",
-                padding: "16px 12px",
-                height: "100%",
-              }}>
-              <AuthorCaption
-                user={user}
-                createdAt={created_at}
-                caption={caption}
-              />
-              {comments.map(comment => (
-                <UserComment key={comment.id} comment={comment} />
-              ))}
-            </div>
+          <div
+            style={{
+              overflowY: "scroll",
+              padding: "16px 12px",
+              height: "100%",
+            }}>
+            <AuthorCaption
+              user={user}
+              createdAt={created_at}
+              caption={caption}
+            />
+            {comments.map(comment => (
+              <UserComment key={comment.id} comment={comment} />
+            ))}
           </div>
           <Typography color='textSecondary' className={classes.datePosted}>
             {formatPostDate(created_at)}

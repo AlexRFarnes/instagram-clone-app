@@ -7,6 +7,7 @@ export const ME = gql`
       user_id
       name
       username
+      created_at
       profile_image
       last_checked
       followers {

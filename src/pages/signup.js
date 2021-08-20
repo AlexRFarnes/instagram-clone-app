@@ -19,7 +19,7 @@ import { CHECK_IF_USERNAME_TAKEN } from "../graphql/queries";
 
 function SignUpPage() {
   const classes = useSignUpPageStyles();
-  const { register, handleSubmit, formState } = useForm({
+  const { register, handleSubmit, formState, errors } = useForm({
     mode: "onBlur",
   });
   const { signUpWithEmailAndPassword } = React.useContext(AuthContext);
@@ -108,9 +108,9 @@ function SignUpPage() {
                   validate: input => isEmail(input),
                 })}
                 InputProps={{
-                  endAdornment: formState.errors.email
+                  endAdornment: errors.email
                     ? errorIcon
-                    : formState.touchedFields.email && validIcon,
+                    : formState.touched.email && validIcon,
                 }}
                 fullWidth
                 variant='filled'
@@ -127,9 +127,9 @@ function SignUpPage() {
                   maxLength: 20,
                 })}
                 InputProps={{
-                  endAdornment: formState.errors.name
+                  endAdornment: errors.name
                     ? errorIcon
-                    : formState.touchedFields.name && validIcon,
+                    : formState.touched.name && validIcon,
                 }}
                 fullWidth
                 variant='filled'
@@ -148,9 +148,9 @@ function SignUpPage() {
                   pattern: /^[a-zA-Z0-9_.]*$/,
                 })}
                 InputProps={{
-                  endAdornment: formState.errors.username
+                  endAdornment: errors.username
                     ? errorIcon
-                    : formState.touchedFields.username && validIcon,
+                    : formState.touched.username && validIcon,
                 }}
                 fullWidth
                 variant='filled'
@@ -166,9 +166,9 @@ function SignUpPage() {
                   minLength: 5,
                 })}
                 InputProps={{
-                  endAdornment: formState.errors.password
+                  endAdornment: errors.password
                     ? errorIcon
-                    : formState.touchedFields.password && validIcon,
+                    : formState.touched.password && validIcon,
                 }}
                 fullWidth
                 variant='filled'
@@ -179,7 +179,7 @@ function SignUpPage() {
                 autoComplete='new-password'
               />
               <Button
-                disabled={!formState.isValid || formState.isSubmitting}
+                disabled={error || !formState.isValid || formState.isSubmitting}
                 variant='contained'
                 fullWidth
                 color='primary'
