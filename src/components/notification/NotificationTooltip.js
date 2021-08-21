@@ -19,7 +19,7 @@ function NotificationTooltip({ notifications }) {
           <Typography>{followCount}</Typography>
         </div>
       )}
-      {likeCount && (
+      {likeCount > 0 && (
         <div className={classes.tooltip}>
           <span aria-label='Likes' className={classes.likes} />
           <Typography>{likeCount}</Typography>

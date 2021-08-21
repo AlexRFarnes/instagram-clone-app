@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography } from "@material-ui/core";
-import { getDefaultPost, defaultUser } from "../../data";
+// import { getDefaultPost, defaultUser } from "../../data";
 import { LoadingLargeIcon } from "../../icons";
 import { useMorePostsFromUserStyles } from "../../styles";
 import GridPost from "../shared/GridPost";

@@ -23,6 +23,6 @@ exports.processSignUp = functions.auth.user().onCreate(user => {
       return metadataRef.set({ refreshTime: new Date().getTime() });
     })
     .catch(error => {
-      console.log(error);
+      console.error(error);
     });
 });

@@ -55,7 +55,6 @@ function Post({ postId }) {
     caption,
     comments,
     saved_posts,
-    user_id,
     likes,
   } = data.posts_by_pk;
 
@@ -118,7 +117,11 @@ function Post({ postId }) {
         </div>
       </article>
       {showOptionsDialog && (
-        <OptionsDialog onClose={() => setOptionsDialog(false)} />
+        <OptionsDialog
+          postId={id}
+          authorId={user.id}
+          onClose={() => setOptionsDialog(false)}
+        />
       )}
     </div>
   );

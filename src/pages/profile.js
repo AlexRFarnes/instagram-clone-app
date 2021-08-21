@@ -142,7 +142,8 @@ function ProfileNameSection({ user, isOwner, handleOptionsMenuClick }) {
     followButton = (
       <Button
         onClick={handleFollowUser}
-        variant='outlined'
+        variant='contained'
+        color='primary'
         className={classes.button}>
         Follow
       </Button>
