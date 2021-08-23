@@ -36,7 +36,7 @@ List of features ready and TODOs for future development
 
 ## Status
 
-Project is: _in-progress_.
+Project is: _finished_.
 
 ## Inspiration
 
