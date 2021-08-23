@@ -14,7 +14,7 @@
 
 ## General info
 
-A clone of the Instagram app built with React and Material UI for the frontend and UI, on the backend Hasura and GraphQL to store all the information like users, posts, comments, etc. Apollo Client for connecting React and GraphQL. Firebase for handling authentication with email and with Facebook. The app consists of a UI like the real instagram and includes the feed, explore, post, and profile page.
+A clone of the Instagram app built with React and Material UI for the frontend and UI, on the backend Hasura and GraphQL to store all the information like users, posts, comments, etc. Apollo Client for connecting React and GraphQL. Firebase for handling authentication with email and with Facebook. The app consists of a UI that looks like the real instagram and React Router to display the different routes that made the single-page application: login, signup, feed, explore, post, and profile page.
 
 ## Screenshots
 
@@ -31,6 +31,7 @@ A clone of the Instagram app built with React and Material UI for the frontend a
 - JavaScript
 - React
 - React Hook Form
+- React Router
 - date-fns
 - Firebase
 - Apollo Client
@@ -41,7 +42,7 @@ A clone of the Instagram app built with React and Material UI for the frontend a
 
 List of features ready and TODOs for future development
 
-- Multi-page app:
+- Multiple routes:
   - Login / Signup
   - Explore
   - Feed
